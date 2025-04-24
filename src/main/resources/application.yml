@@ -1,0 +1,39 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: Spring_WebFlux
+  r2dbc:
+    url: r2dbc:postgresql://@ep-ancient-resonance-a524s6tw-pooler.us-east-2.aws.neon.tech/Datas?sslmode=require
+    username: neondb_owner
+    password: npg_pPVBO4H9hyFR
+  flyway:
+    enabled: true
+    locations: classpath:/sql/aitoHuman.sql
+
+logging:
+  level:
+    org.springframework.r2dbc: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+
+rapidapi:
+  url: https://chatgpt-42.p.rapidapi.com
+  host: chatgpt-42.p.rapidapi.com
+  apikey: e44a7c4030mshefcd6461a8e28efp15c3b4jsn636ba7dcf5e6
+
+rapidapiLlama:
+  url: https://meta-llama-3-1-405b1.p.rapidapi.com
+  host:  meta-llama-3-1-405b1.p.rapidapi.com
+  apikey: e153c9f1ebmshf40cdf0d019287ep19b8f8jsn05eeb868f7a1
+
+
+
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
