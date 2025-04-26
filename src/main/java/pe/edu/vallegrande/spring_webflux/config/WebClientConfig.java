@@ -9,13 +9,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    @Value("${rapidapi.url}")
+    @Value("${rapidapiChatGPT.url}")
     private String RAPIDAPI_URL;
 
-    @Value("${rapidapi.host}")
+    @Value("${rapidapiChatGPT.host}")
     private String RAPIDAPI_HOST;
 
-    @Value("${rapidapi.apikey}")
+    @Value("${rapidapiChatGPT.apikey}")
     private String RAPIDAPI_APIKEY;
 
     @Bean
@@ -38,6 +38,7 @@ public class WebClientConfig {
 
     @Value("${rapidapiLlama.apikey}")
     private String RAPIDAPILLAMA_APIKEY;
+    
     @Bean
     public WebClient metaLlamaClient() {
         return WebClient.builder()
@@ -47,6 +48,4 @@ public class WebClientConfig {
                 .defaultHeader("Content-Type", "application/json")
                 .build();
     }
-
-
 }

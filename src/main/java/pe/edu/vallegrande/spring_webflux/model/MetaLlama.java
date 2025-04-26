@@ -1,11 +1,9 @@
 package pe.edu.vallegrande.spring_webflux.model;
 
-import lombok.Data;
-import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Data
 @Table(name = "meta_llama")
 public class MetaLlama {
 
@@ -18,6 +16,14 @@ public class MetaLlama {
     @Column(value = "answer")
     private String answer;    // Lo que recibes como respuesta (content del role "assistant")
 
+    public MetaLlama() {
+    }
+
+    public MetaLlama(Long id, String content, String answer) {
+        this.id = id;
+        this.content = content;
+        this.answer = answer;
+    }
 
     public Long getId() {
         return id;
