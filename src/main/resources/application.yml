@@ -5,9 +5,7 @@ spring:
   application:
     name: Spring_WebFlux
   r2dbc:
-    url: r2dbc:postgresql://ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech/iaconBD?sslmode=require
-    username: iaconBD_owner
-    password: npg_97bzqPIlgoER
+    url: r2dbc:postgresql://iaconBD_owner:endpoint=ep-square-salad-a4hog3y6;npg_97bzqPIlgoER@ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech:5432/iaconBD?sslMode=require
   flyway:
     enabled: true
     url: jdbc:postgresql://ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech/iaconBD?sslmode=require
@@ -24,12 +22,12 @@ logging:
 rapidapiChatGPT:
   url: https://chatgpt-42.p.rapidapi.com
   host: chatgpt-42.p.rapidapi.com
-  apikey: e44a7c4030mshefcd6461a8e28efp15c3b4jsn636ba7dcf5e6
+  apikey: de5d3d8f6cmsh25aea077a709cabp114a77jsn0577b2d51741
 
 rapidapiLlama:
   url: https://meta-llama-3-1-405b1.p.rapidapi.com
   host: meta-llama-3-1-405b1.p.rapidapi.com
-  apikey: e153c9f1ebmshf40cdf0d019287ep19b8f8jsn05eeb868f7a1
+  apikey: de5d3d8f6cmsh25aea077a709cabp114a77jsn0577b2d51741
 
 springdoc:
   api-docs:
