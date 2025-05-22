@@ -6,13 +6,12 @@ spring:
     name: Spring_WebFlux
   r2dbc:
     url: r2dbc:postgresql://iaconBD_owner:endpoint=ep-square-salad-a4hog3y6;npg_97bzqPIlgoER@ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech:5432/iaconBD?sslMode=require
-  flyway:
-    enabled: true
-    url: jdbc:postgresql://ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech/iaconBD?sslmode=require
+    #url: jdbc:postgresql://ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech/iaconBD?sslmode=require
     user: iaconBD_owner
     password: npg_97bzqPIlgoER
     locations: classpath:db/migration
-
+  flyway:
+    enabled: true
 logging:
   level:
     org.springframework.r2dbc: DEBUG
