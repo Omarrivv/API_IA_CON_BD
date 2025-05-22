@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class ChatGPT {
 
     @Id
-    private Long id;
+    private Long id;/*id de la respuesta de modelo de GPT */
 
     @Column("content")
     private String content;
