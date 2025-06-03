@@ -35,32 +35,55 @@ public class ChatGPTServiceImpl implements ChatGPTService {
 
     @Override
     public Flux<ChatGPT> findAll() {
-        return repository.findAll();
+        return repository.findAllByStatus("A");
     }
 
     @Override
     public Mono<ChatGPT> findById(String id) {
-        return repository.findById(Long.valueOf(String.valueOf(Long.parseLong(id))));
+        return repository.findByIdAndStatus(Long.valueOf(String.valueOf(Long.parseLong(id))), "A");
     }
 
     @Override
     public Mono<ChatGPT> save(ChatGPT chatGPT) {
+        chatGPT.setStatus("A");
         log.info("Registrando pregunta: {}", chatGPT.getContent());
         return consultarIA(chatGPT);
     }
 
     @Override
     public Mono<ChatGPT> update(String id, ChatGPT chatGPT) {
-        return repository.findById(Long.valueOf(String.valueOf(Long.parseLong(id))))
+        return repository.findByIdAndStatus(Long.valueOf(String.valueOf(Long.parseLong(id))), "A")
                 .flatMap(existing -> {
                     existing.setContent(chatGPT.getContent());
+                    existing.setStatus("A");
                     return consultarIA(existing);
                 });
     }
 
     @Override
     public Mono<Void> delete(String id) {
-        return repository.deleteById(Long.valueOf(String.valueOf(Long.parseLong(id))));
+        return repository.findById(Long.valueOf(String.valueOf(Long.parseLong(id))))
+                .flatMap(chatGPT -> {
+                    chatGPT.setStatus("I");
+                    return repository.save(chatGPT);
+                })
+                .then();
+    }
+
+    @Override
+    public Mono<ChatGPT> restore(String id) {
+        return repository.findById(Long.valueOf(String.valueOf(Long.parseLong(id))))
+                .filter(chatGPT -> "I".equals(chatGPT.getStatus())) // Solo restaura si está inactivo
+                .flatMap(chatGPT -> {
+                    chatGPT.setStatus("A");
+                    return repository.save(chatGPT);
+                })
+                .switchIfEmpty(Mono.error(new RuntimeException("Registro no encontrado o ya está activo")));
+    }
+
+    @Override
+    public Flux<ChatGPT> findAllInactive() {
+        return repository.findAllByStatus("I");
     }
 
     public Mono<ChatGPT> consultarIA(ChatGPT chatGPT) {
@@ -98,16 +121,29 @@ public class ChatGPTServiceImpl implements ChatGPTService {
                             }
                         }
                         
-                        ChatGPT response = new ChatGPT();
-                        response.setContent(chatGPT.getContent());
-                        response.setAnswer(respuesta);
-                        return response;
+                        // Mantener el mismo ID si existe
+                        if (chatGPT.getId() != null) {
+                            chatGPT.setAnswer(respuesta);
+                            return chatGPT;
+                        } else {
+                            ChatGPT response = new ChatGPT();
+                            response.setContent(chatGPT.getContent());
+                            response.setAnswer(respuesta);
+                            response.setStatus(chatGPT.getStatus());
+                            return response;
+                        }
                     } catch (Exception e) {
                         log.error("Error al procesar JSON: {}", e.getMessage());
-                        ChatGPT errorResponse = new ChatGPT();
-                        errorResponse.setContent(chatGPT.getContent());
-                        errorResponse.setAnswer("Error al procesar la respuesta: " + e.getMessage());
-                        return errorResponse;
+                        if (chatGPT.getId() != null) {
+                            chatGPT.setAnswer("Error al procesar la respuesta: " + e.getMessage());
+                            return chatGPT;
+                        } else {
+                            ChatGPT errorResponse = new ChatGPT();
+                            errorResponse.setContent(chatGPT.getContent());
+                            errorResponse.setAnswer("Error al procesar la respuesta: " + e.getMessage());
+                            errorResponse.setStatus(chatGPT.getStatus());
+                            return errorResponse;
+                        }
                     }
                 })
                 .flatMap(repository::save)
@@ -116,6 +152,7 @@ public class ChatGPTServiceImpl implements ChatGPTService {
                     ChatGPT errorResponse = new ChatGPT();
                     errorResponse.setContent(chatGPT.getContent());
                     errorResponse.setAnswer("Error al guardar en la base de datos");
+                    errorResponse.setStatus(chatGPT.getStatus());
                     return Mono.just(errorResponse);
                 });
     }

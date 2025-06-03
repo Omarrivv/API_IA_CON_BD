@@ -16,13 +16,17 @@ public class ChatGPT {
     @Column("answer")
     private String answer;
 
+    @Column("status")
+    private String status = "A"; // Valor por defecto
+
     public ChatGPT() {
     }
 
-    public ChatGPT(Long id, String content, String answer) {
+    public ChatGPT(Long id, String content, String answer, String status) {
         this.id = id;
         this.content = content;
         this.answer = answer;
+        this.status = status;
     }
 
     public Long getId() {
@@ -47,5 +51,13 @@ public class ChatGPT {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

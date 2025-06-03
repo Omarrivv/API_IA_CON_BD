@@ -35,7 +35,7 @@ public class IAServiceImpl implements IAService {
 
     @Override
     public Mono<AitoHuman> findById(String id) {
-        return repository.findById(String.valueOf(Long.parseLong(id)));
+        return repository.findById(Long.parseLong(id));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class IAServiceImpl implements IAService {
 
     @Override
     public Mono<AitoHuman> update(String id, AitoHuman human) {
-        return repository.findById(String.valueOf(Long.parseLong(id)))
+        return repository.findById(Long.parseLong(id))
                 .flatMap(existing -> {
                     existing.setText(human.getText());
                     return consultarIA(existing);
@@ -55,7 +55,7 @@ public class IAServiceImpl implements IAService {
 
     @Override
     public Mono<Void> delete(String id) {
-        return repository.deleteById(String.valueOf(Long.parseLong(id)));
+        return repository.deleteById(Long.parseLong(id));
     }
 
     public record ChatRequest(String text) {}

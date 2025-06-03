@@ -10,4 +10,6 @@ public interface ChatGPTService {
     Mono<ChatGPT> save(ChatGPT chatGPT);
     Mono<ChatGPT> update(String id, ChatGPT chatGPT);
     Mono<Void> delete(String id);
+    Mono<ChatGPT> restore(String id);
+    Flux<ChatGPT> findAllInactive();
 } 

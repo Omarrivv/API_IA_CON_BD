@@ -9,9 +9,13 @@ spring:
     #url: jdbc:postgresql://ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech/iaconBD?sslmode=require
     user: iaconBD_owner
     password: npg_97bzqPIlgoER
-    locations: classpath:db/migration
   flyway:
     enabled: true
+    locations: classpath:db/migration
+    url: jdbc:postgresql://ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech/iaconBD?sslmode=require
+    user: ${spring.r2dbc.user}
+    password: ${spring.r2dbc.password}
+
 logging:
   level:
     org.springframework.r2dbc: DEBUG

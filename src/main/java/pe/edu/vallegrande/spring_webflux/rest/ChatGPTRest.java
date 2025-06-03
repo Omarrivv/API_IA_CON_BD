@@ -46,4 +46,16 @@ public class ChatGPTRest {
                 .then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/inactive")
+    public Flux<ChatGPT> findAllInactive() {
+        return chatGPTService.findAllInactive();
+    }
+
+    @PutMapping("/restore/{id}")
+    public Mono<ResponseEntity<ChatGPT>> restore(@PathVariable String id) {
+        return chatGPTService.restore(id)
+                .map(restored -> new ResponseEntity<>(restored, HttpStatus.OK))
+                .onErrorResume(e -> Mono.just(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
+    }
 } 
