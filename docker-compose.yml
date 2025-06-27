@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  age-detector-be:
+    build: .
+    image: omarweb/spring-webflux:latest
+    container_name: spring-webflux  # Nombre específico para el contenedor
+    ports:
+      - "8085:8085"  # Mapea el puerto 8086 del host al 8086 del contenedor
+    environment:
+      PORT: 8085     # Variable de entorno que Spring Boot leerá como `server.port`
+      DATABASE_URL: "r2dbc:postgresql://iaconBD_owner:endpoint=ep-square-salad-a4hog3y6;npg_97bzqPIlgoER@ep-square-salad-a4hog3y6-pooler.us-east-1.aws.neon.tech:5432/iaconBD?sslMode=require"
+      DATABASE_USERNAME: "iaconBD_owner"
+      DATABASE_PASSWORD: "npg_97bzqPIlgoER"
+      RAPIDAPI_URL: "https://chatgpt-42.p.rapidapi.com"
+      RAPIDAPI_HOST: "chatgpt-42.p.rapidapi.com"
+      RAPIDAPI_APIKEY: "e153c9f1ebmshf40cdf0d019287ep19b8f8jsn05eeb868f7a1"
+      LLAMAAPI_URL: "https://meta-llama-llama-3-1-8b-instruct.p.rapidapi.com"
+      LLAMAAPI_HOST: "meta-llama-llama-3-1-8b-instruct.p.rapidapi.com"
+      LLAMAAPI_APIKEY: "ab63a2ee82msh963a1904f3b0920p1d6ed6jsn2761ff7b5ec2"

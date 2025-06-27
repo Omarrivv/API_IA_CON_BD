@@ -1,0 +1,10 @@
+# kubectl apply -f namespace.yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: omarrivera
+  labels:
+    environment: development
+    team: omarrivera-vg
+  annotations:
+    owner: omarrivera-vg 

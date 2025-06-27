@@ -1,0 +1,51 @@
+# consultar versión de minikube
+minikube version
+
+# iniciar clúster kubernetes
+minikube start
+
+# listar namespace
+kubectl get namespace
+kubectl get ns
+
+# consultar namespace en uso por "default" | LINUX
+kubectl config view --minify | grep namespace
+
+# consultar namespace en uso por "default" | WINDOWS
+kubectl config view --minify | findstr namespace
+
+# cambiar un namespace en uso por "default" a "omarrivera"
+kubectl config set-context --current --namespace=omarrivera
+
+# consultar todos los recursos de un namespace "omarrivera"
+kubectl get all -n omarrivera
+
+# consultar todos los recursos y secret de un namespace "omarrivera"
+kubectl get all,secrets
+
+# listar services del namespace "omarrivera"
+minikube service age-detector-be -n omarrivera
+minikube service list
+
+# probar los endpoints del microservicio
+# API Principal
+curl http://192.168.49.2:30001/api/ai
+curl http://192.168.49.2:30001/api/ai/1
+
+# API Meta Llama
+curl http://192.168.49.2:30001/api/ai/metallama
+curl http://192.168.49.2:30001/api/ai/metallama/1
+
+# API ChatGPT
+curl http://192.168.49.2:30001/api/ai/chatgpt
+curl http://192.168.49.2:30001/api/ai/chatgpt/1
+curl http://192.168.49.2:30001/api/ai/chatgpt/inactive
+
+# API Gemini
+curl http://192.168.49.2:30001/api/gemini/list
+
+# crear un túnel de puerto la máquina local (host) y el clúster de Kubernetes
+kubectl port-forward service/age-detector-be 8090:80
+
+# ver los logs del pod (logs del proyecto)
+kubectl logs nombre-pod 

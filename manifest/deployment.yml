@@ -1,0 +1,25 @@
+# kubectl apply -f deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: age-detector-be
+  namespace: omarrivera
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: age-detector-be
+  template:
+    metadata:
+      labels:
+        app: age-detector-be
+    spec:
+      containers:
+      - name: age-detector-be
+        image: omarweb/spring-webflux:latest   # Imagen de Docker Hub
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8085
+        envFrom:
+        - secretRef:
+            name: credentials 

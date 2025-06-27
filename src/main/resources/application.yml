@@ -18,8 +18,10 @@ spring:
 
 logging:
   level:
-    org.springframework.r2dbc: DEBUG
-    org.springframework.web.reactive.function.client: DEBUG
+    root: INFO
+    pe.edu.vallegrande: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG
     org.flywaydb: DEBUG
 
 rapidapiChatGPT:
@@ -39,3 +41,8 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
+
+gemini:
+  api:
+    key: AIzaSyCiu3kky2VKP_83pzD33jtFDNTeWEJQ_mA
+    url: https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent
